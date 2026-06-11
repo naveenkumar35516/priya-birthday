@@ -100,6 +100,74 @@
     updateMusicBtn();
   }
 
+  // Unmute overlay handling for browsers that block audible autoplay
+  const unmuteOverlay = document.getElementById('unmuteOverlay');
+  const unmuteBtn = document.getElementById('unmuteBtn');
+
+  function showUnmuteOverlay() {
+    if (!unmuteOverlay) return;
+    unmuteOverlay.classList.remove('hidden');
+    unmuteOverlay.setAttribute('aria-hidden', 'false');
+  }
+
+  function hideUnmuteOverlay() {
+    if (!unmuteOverlay) return;
+    unmuteOverlay.classList.add('hidden');
+    unmuteOverlay.setAttribute('aria-hidden', 'true');
+  }
+
+  // Try audible play; if blocked, try muted autoplay then show unmute overlay
+  function tryAutoplay() {
+    if (!bgMusic) return;
+    bgMusic.volume = 1;
+    bgMusic.muted = false;
+    const playPromise = bgMusic.play();
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        // played successfully (audible)
+        hideUnmuteOverlay();
+        updateMusicBtn();
+      }).catch(() => {
+        // audible blocked — try muted autoplay
+        bgMusic.muted = true;
+        bgMusic.volume = 0.0;
+        bgMusic.play().then(() => {
+          // muted play succeeded; prompt user to unmute
+          showUnmuteOverlay();
+          updateMusicBtn();
+        }).catch(() => {
+          // muted play also failed — show overlay so user can start playback
+          showUnmuteOverlay();
+        });
+      });
+    }
+  }
+
+  if (unmuteBtn) {
+    unmuteBtn.addEventListener('click', () => {
+      if (!bgMusic) return;
+      // Unmute and ramp volume up smoothly
+      bgMusic.muted = false;
+      bgMusic.volume = 0.0;
+      const step = 0.08;
+      const interval = setInterval(() => {
+        bgMusic.volume = Math.min(1, bgMusic.volume + step);
+        if (bgMusic.volume >= 0.99) {
+          bgMusic.volume = 1;
+          clearInterval(interval);
+        }
+      }, 120);
+      hideUnmuteOverlay();
+      try { bgMusic.play().catch(() => {}); } catch (_) {}
+      updateMusicBtn();
+    });
+  }
+
+  // Run the autoplay attempt on load
+  window.addEventListener('load', () => {
+    tryAutoplay();
+  });
+
   // Attempt to play on load (some browsers require user interaction and may block autoplay).
   window.addEventListener('load', () => {
     if (bgMusic) {
