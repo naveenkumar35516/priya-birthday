@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#EC1C24">
+  <meta name="description" content="Happy 21st Birthday Priya E — A special celebration">
+  <title>Happy Birthday Priya E 🎂</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Outfit:wght@300;400;600;700;800&family=Noto+Sans+Tamil:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Floating particles -->
+  <div class="particles" id="particles"></div>
+
+  <!-- Music player (autoplays) -->
+  <audio id="bgMusic" loop preload="auto" autoplay>
+    <source src="audio/kadhaippoma.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <!-- RCB badge removed for a pure vibe experience -->
+
+    <div class="hero-content">
+      <p class="hero-pre">June 22 · 21st Birthday</p>
+      <h1 class="hero-title">
+        <span class="line1">Happy Birthday</span>
+        <span class="line2">Priya E</span>
+      </h1>
+      <p class="hero-princess">She is my princess 👑</p>
+
+      <div class="clock-box">
+        <div class="clock-label">Right Now</div>
+        <div class="clock-time" id="liveClock">--:--:--</div>
+        <div class="clock-date" id="liveDate">Loading...</div>
+      </div>
+
+      <div class="countdown-box" id="countdownBox">
+        <div class="countdown-label" id="countdownLabel">Countdown to your day</div>
+        <div class="countdown-grid">
+          <div class="countdown-item"><span id="cdDays">00</span><small>Days</small></div>
+          <div class="countdown-item"><span id="cdHours">00</span><small>Hours</small></div>
+          <div class="countdown-item"><span id="cdMins">00</span><small>Mins</small></div>
+          <div class="countdown-item"><span id="cdSecs">00</span><small>Secs</small></div>
+        </div>
+      </div>
+
+      <div class="hero-quote tamil-quote">
+        எப்ப சொல்லப் போகிறாய் நீ சொல்லும் வார்த்தையில் இருக்கும் தமிழ் கூட ஏங்குகிறது அந்த வார்த்தைக்காக.
+      </div>
+
+      <button class="cta-main pulse" id="enterBtn">
+        <span>✨ Open Your Surprise ✨</span>
+      </button>
+    </div>
+
+    <div class="runner-track">
+      <div class="runner" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- Main Content (hidden until enter) -->
+  <main class="main-content hidden" id="mainContent">
+
+    <!-- Action Buttons -->
+    <nav class="action-nav">
+      <button class="action-btn" data-section="wishes">
+        <span class="btn-icon">💌</span>
+        <span>Wishes</span>
+      </button>
+      <button class="action-btn" data-section="memories">
+        <span class="btn-icon">📸</span>
+        <span>Memories</span>
+      </button>
+      <button class="action-btn celebrate-btn" data-section="celebrate">
+        <span class="btn-icon">🎉</span>
+        <span>Celebrate!</span>
+      </button>
+    </nav>
+
+    <!-- Wishes Section -->
+    <section class="panel" id="wishes">
+      <div class="panel-header">
+        <h2>Birthday Wishes</h2>
+        <p class="panel-sub">21 candles, infinite love</p>
+      </div>
+      <div class="wish-cards">
+        <div class="wish-card reveal">
+          <div class="wish-emoji">🎂</div>
+          <h3>Happy 21st Birthday!</h3>
+          <p>Today the world gets a little brighter because it's your day, Priya. May every dream you chase come true.</p>
+        </div>
+        <div class="wish-card reveal">
+          <div class="wish-emoji">👑</div>
+          <h3>My Princess</h3>
+          <p>She is my princess — not because of a crown, but because of the way she lights up every moment with her smile.</p>
+        </div>
+        <div class="wish-card reveal">
+          <div class="wish-emoji">✨</div>
+          <h3>Play Bold, Live Bold</h3>
+          <p>Play bold, live bold — run fast, dream big, and never stop believing.</p>
+        </div>
+        <div class="wish-card reveal tamil-card">
+          <div class="wish-emoji">🌸</div>
+          <h3>தமிழ் வாழ்த்துகள்</h3>
+          <p>இனிய பிறந்த நாள் வாழ்த்துகள் Priya! நீண்ட நீண்ட காலம் நீடு வாழ வேண்டும். அன்பும் அறிவும் பண்பும் உனக்கு எப்போதும் இருக்கட்டும்.</p>
+        </div>
+        <div class="wish-card reveal quote-card">
+          <div class="wish-emoji">✨</div>
+          <h3>Your Quote</h3>
+          <p class="dream-quote">"Chase your dreams, but never forget where you came from."</p>
+        </div>
+        <div class="wish-card reveal">
+          <div class="wish-emoji">💝</div>
+          <h3>A Secret Wish</h3>
+          <p>May Kadhaippoma play in the background of your happiest memories. May every story you tell be beautiful — because you are.</p>
+        </div>
+      </div>
+      <!-- Texted wishes: paste the message and it will display below -->
+      <div class="text-wish-box">
+        <h3>Texted Wishes</h3>
+        <p class="panel-sub">Paste any text message and it will appear below.</p>
+        <div class="text-wish-form">
+          <input id="textWishName" type="text" placeholder="Sender name (optional)" />
+          <textarea id="textWishInput" placeholder="Paste text message here..." rows="3"></textarea>
+          <button id="sendTextBtn" class="text-submit-btn">Add Message</button>
+        </div>
+        <div id="textWishList" class="text-wish-list"></div>
+      </div>
+    </section>
+
+    <!-- Memories / Photos Section -->
+    <section class="panel hidden-panel" id="memories">
+      <div class="panel-header">
+        <h2>Our Memories</h2>
+        <p class="panel-sub">Every photo holds a piece of my heart</p>
+      </div>
+      <div class="photo-gallery">
+        <div class="photo-frame frame-main reveal" data-caption="Shine bright, Priya! ✨">
+          <img src="assets/priya-shine.png" alt="Priya E - Shine bright collage">
+          <div class="photo-overlay">
+            <span>Shine ♡ bright day ♡</span>
+          </div>
+        </div>
+        <div class="photo-frame reveal" data-caption="Chase your dreams">
+          <img src="assets/priya-shine.png" alt="Priya E - Chase your dreams">
+          <div class="photo-overlay">
+            <span>Chase your dreams 💫</span>
+          </div>
+        </div>
+        <div class="photo-frame memory-card reveal pink-card">
+          <div class="memory-inner">
+            <div class="memory-heart">💕</div>
+            <p class="memory-text">21 years of grace,<br>beauty & strength.<br>You make every day<br>feel like a win.</p>
+            <div class="memory-tag">Memory #3</div>
+          </div>
+        </div>
+        <div class="photo-frame memory-card reveal gold-card">
+          <div class="memory-inner">
+            <div class="memory-heart">🏆</div>
+            <p class="memory-text">Champion in your eyes,<br>shining brighter every day.<br>Happy Birthday<br>my superstar!</p>
+            <div class="memory-tag">Memory #4</div>
+          </div>
+        </div>
+        <div class="photo-frame memory-card reveal white-card">
+          <div class="memory-inner">
+            <div class="memory-heart">🌹</div>
+            <p class="memory-text tamil-memory">கதைப்போமா…<br>ஒன்றாக நீயும் நானும்<br>நீ பேச பேச<br>காயம் ஆறுமே…</p>
+            <div class="memory-tag">Kadhaippoma ♪</div>
+          </div>
+        </div>
+        <div class="photo-frame memory-card reveal red-card">
+          <div class="memory-inner">
+            <div class="memory-heart">👸</div>
+            <p class="memory-text">She is my princess.<br>Always has been.<br>Always will be.<br>Forever & always.</p>
+            <div class="memory-tag">Forever ♾</div>
+          </div>
+        </div>
+      </div>
+      <!-- Removed extra photo reveal button to keep all photos consistent -->
+    </section>
+
+    <!-- Special wish section removed for a pure vibe site -->
+
+    <!-- Celebrate Section -->
+    <section class="panel hidden-panel" id="celebrate">
+      <div class="panel-header">
+        <h2>Let's Celebrate! 🎊</h2>
+        <p class="panel-sub">Tap the buttons and feel the magic</p>
+      </div>
+      <div class="celebrate-grid">
+        <button class="celebrate-item" id="confettiBtn">
+          <span>🎊</span>
+          <small>Confetti Blast</small>
+        </button>
+        <button class="celebrate-item" id="fireworksBtn">
+          <span>🎆</span>
+          <small>Fireworks</small>
+        </button>
+        <button class="celebrate-item" id="heartsBtn">
+          <span>💕</span>
+          <small>Heart Rain</small>
+        </button>
+        <button class="celebrate-item" id="cakeBtn">
+          <span>🎂</span>
+          <small>Birthday Cake</small>
+        </button>
+      </div>
+      <div class="cake-display hidden" id="cakeDisplay">
+        <div class="birthday-cake">
+          <div class="cake-tier tier3"></div>
+          <div class="cake-tier tier2"></div>
+          <div class="cake-tier tier1"></div>
+          <div class="candles">
+            <div class="candle" style="--i:0"><div class="flame"></div></div>
+            <div class="candle" style="--i:1"><div class="flame"></div></div>
+            <div class="candle" style="--i:2"><div class="flame"></div></div>
+            <div class="candle" style="--i:3"><div class="flame"></div></div>
+            <div class="candle" style="--i:4"><div class="flame"></div></div>
+            <div class="candle" style="--i:5"><div class="flame"></div></div>
+            <div class="candle" style="--i:6"><div class="flame"></div></div>
+            <div class="candle" style="--i:7"><div class="flame"></div></div>
+            <div class="candle" style="--i:8"><div class="flame"></div></div>
+            <div class="candle" style="--i:9"><div class="flame"></div></div>
+            <div class="candle" style="--i:10"><div class="flame"></div></div>
+            <div class="candle" style="--i:11"><div class="flame"></div></div>
+            <div class="candle" style="--i:12"><div class="flame"></div></div>
+            <div class="candle" style="--i:13"><div class="flame"></div></div>
+            <div class="candle" style="--i:14"><div class="flame"></div></div>
+            <div class="candle" style="--i:15"><div class="flame"></div></div>
+            <div class="candle" style="--i:16"><div class="flame"></div></div>
+            <div class="candle" style="--i:17"><div class="flame"></div></div>
+            <div class="candle" style="--i:18"><div class="flame"></div></div>
+            <div class="candle" style="--i:19"><div class="flame"></div></div>
+            <div class="candle" style="--i:20"><div class="flame"></div></div>
+          </div>
+        </div>
+        <p class="cake-text">Make a wish, Priya! ✨</p>
+      </div>
+      <div class="final-message">
+        <h3>She is my princess 👑</h3>
+        <p class="tamil-final">எப்ப சொல்லப் போகிறாய் நீ சொல்லும் வார்த்தையில் இருக்கும் தமிழ் கூட ஏங்குகிறது அந்த வார்த்தைக்காக.</p>
+        <p>Happy 21st Birthday, Priya E. This link was made with all my love. ❤️</p>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <p>Made with 💕 for Priya E · June 22 · 21 🎂</p>
+      <!-- RCB footer removed for unified vibe -->
+    </footer>
+  </main>
+
+  <!-- Lightbox -->
+  <div class="lightbox hidden" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose">✕</button>
+    <img src="" alt="Memory photo" id="lightboxImg">
+    <p id="lightboxCaption"></p>
+  </div>
+
+  <!-- Canvas for effects -->
+  <canvas id="fxCanvas"></canvas>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
