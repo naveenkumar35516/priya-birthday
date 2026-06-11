@@ -195,7 +195,7 @@
       this.rotSpeed = (Math.random() - 0.5) * 10;
       const colors = ['#EC1C24', '#D4AF37', '#FF69B4', '#FFFFFF', '#FF1493', '#FFD700'];
       this.color = colors[Math.floor(Math.random() * colors.length)];
-      this.emoji = type === 'heart' ? '💕' : type === 'firework' ? '✨' : '';
+      this.emoji = type === 'heart' ? '💕' : type === 'firework' ? '✨' : type === 'sparkle' ? '🌟' : '';
     }
 
     update() {
@@ -269,9 +269,24 @@
     }
   }
 
+  function launchSparkle(count = 60) {
+    for (let i = 0; i < count; i++) {
+      const p = new FXParticle(
+        Math.random() * canvas.width,
+        Math.random() * canvas.height * 0.35,
+        'sparkle'
+      );
+      p.vx = (Math.random() - 0.5) * 4;
+      p.vy = Math.random() * -5 - 2;
+      p.gravity = 0.02;
+      particles.push(p);
+    }
+  }
+
   document.getElementById('confettiBtn').addEventListener('click', () => launchConfetti(100));
   document.getElementById('fireworksBtn').addEventListener('click', launchFireworks);
   document.getElementById('heartsBtn').addEventListener('click', () => launchHearts(50));
+  document.getElementById('sparkleBtn').addEventListener('click', () => launchSparkle(80));
   document.getElementById('cakeBtn').addEventListener('click', () => {
     document.getElementById('cakeDisplay').classList.remove('hidden');
     launchConfetti(50);
@@ -292,6 +307,30 @@
 
   function saveTextWishes(list) {
     try { localStorage.setItem(TEXT_WISH_KEY, JSON.stringify(list)); } catch (_) {}
+  }
+
+  const ADMIN_NOTE_KEY = 'bd_admin_notes_v1';
+
+  function loadAdminNotes() {
+    try { return JSON.parse(localStorage.getItem(ADMIN_NOTE_KEY) || '[]'); } catch (_) { return []; }
+  }
+
+  function saveAdminNotes(list) {
+    try { localStorage.setItem(ADMIN_NOTE_KEY, JSON.stringify(list)); } catch (_) {}
+  }
+
+  function renderAdminNotes() {
+    const container = document.getElementById('adminNoteList');
+    if (!container) return;
+    const list = loadAdminNotes();
+    if (list.length === 0) {
+      container.innerHTML = '<p class="muted">No private admin notes yet. Unlock to add one.</p>';
+      return;
+    }
+    container.innerHTML = list.slice().reverse().map(item => {
+      const time = new Date(item.time).toLocaleString();
+      return `<div class="admin-note-card"><strong>Admin note</strong><p>${escapeHtml(item.note).replace(/\n/g, '<br>')}</p><small>${time}</small></div>`;
+    }).join('');
   }
 
   function escapeHtml(str) {
@@ -339,8 +378,40 @@
     });
   }
 
+  const adminToggle = document.getElementById('adminToggle');
+  const adminPanel = document.getElementById('adminPanel');
+  const adminNoteInput = document.getElementById('adminNoteInput');
+  const saveAdminNoteBtn = document.getElementById('saveAdminNote');
+
+  if (adminToggle && adminPanel) {
+    adminToggle.addEventListener('click', () => {
+      const secret = prompt('Enter the admin key to unlock private notes');
+      if (secret && secret.trim().toLowerCase() === 'birthdayadmin') {
+        adminPanel.classList.remove('hidden');
+        renderAdminNotes();
+      } else {
+        alert('Secret admin key is required.');
+      }
+    });
+  }
+
+  if (saveAdminNoteBtn) {
+    saveAdminNoteBtn.addEventListener('click', () => {
+      if (!adminNoteInput) return;
+      const note = adminNoteInput.value.trim();
+      if (!note) return;
+      const list = loadAdminNotes();
+      list.push({ note, time: Date.now() });
+      saveAdminNotes(list);
+      adminNoteInput.value = '';
+      renderAdminNotes();
+      launchSparkle(24);
+    });
+  }
+
   // render on init
   renderTextWishes();
+  renderAdminNotes();
 
   // ===== Init =====
   initParticles();

@@ -26,7 +26,9 @@ html {
 
 body {
   font-family: var(--font-body);
-  background: var(--gradient-pink);
+  background: linear-gradient(135deg, #fff0f6, #ffe4ee 25%, #ff9acc 65%, #ffe4f5);
+  background-size: 300% 300%;
+  animation: backgroundDance 18s ease infinite;
   color: var(--rcb-black);
   overflow-x: hidden;
   min-height: 100vh;
@@ -177,8 +179,40 @@ body {
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--pink-deep);
-  margin-bottom: 24px;
+  margin-bottom: 12px;
   animation: fadeInDown 1s ease 0.4s both;
+}
+
+.hero-subtitle {
+  font-size: 0.95rem;
+  color: #9a0c28;
+  margin-top: 12px;
+  line-height: 1.6;
+  animation: fadeInUp 1s ease 0.6s both;
+}
+
+.hero-words {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 18px auto 0;
+}
+
+.hero-words span {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(255,182,193,0.8);
+  color: var(--rcb-red);
+  font-weight: 700;
+  font-size: 0.85rem;
+  animation: floatBadge 4s ease-in-out infinite alternate;
+}
+
+@keyframes floatBadge {
+  from { transform: translateY(0); }
+  to { transform: translateY(-4px); }
 }
 
 .clock-box {
@@ -343,7 +377,7 @@ body {
 
 .action-nav {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 12px;
   padding: 20px 0;
   position: sticky;
@@ -353,6 +387,69 @@ body {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
+
+.admin-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.admin-btn {
+  padding: 12px 18px;
+  background: linear-gradient(135deg, #fff0f5, #ffb6d2);
+  border: 2px solid var(--pink);
+  border-radius: 999px;
+  color: var(--rcb-red);
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(255,105,180,0.16);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.admin-btn:hover { transform: translateY(-2px); }
+
+.admin-note { color: #666; font-size: 0.85rem; }
+
+.admin-panel {
+  margin-top: 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,239,246,0.95));
+  padding: 18px;
+  border-radius: var(--radius);
+  border: 1px solid var(--pink-light);
+  box-shadow: 0 12px 30px rgba(236,28,36,0.08);
+}
+
+.admin-panel.hidden { display: none; }
+
+.admin-panel textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #f5d8e3;
+  background: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+}
+
+.admin-note-list {
+  margin-top: 14px;
+  display: grid;
+  gap: 12px;
+}
+
+.admin-note-card {
+  background: var(--white);
+  border: 1px solid #ffe0f0;
+  border-radius: 12px;
+  padding: 12px 14px;
+  box-shadow: 0 10px 20px rgba(255,105,180,0.08);
+}
+
+.admin-note-card small { color: #999; display: block; margin-top: 8px; }
 
 .action-btn {
   display: flex;
@@ -805,6 +902,14 @@ body {
 .celebrate-item span { font-size: 2rem; }
 .celebrate-item small { font-size: 0.75rem; font-weight: 600; color: var(--rcb-red); }
 
+.celebrate-item.sparkle-btn {
+  background: linear-gradient(135deg, #fff5fb, #ffc6e0);
+  border-color: #ff69b4;
+  color: #b30050;
+}
+
+.celebrate-item.sparkle-btn:hover { background: linear-gradient(135deg, #ffe4f2, #ff8fc6); }
+
 .celebrate-item:active {
   transform: scale(0.95);
   background: var(--pink-light);
@@ -823,34 +928,53 @@ body {
   position: relative;
   display: inline-block;
   margin-bottom: 16px;
+  animation: cakeGlow 3.4s ease-in-out infinite;
 }
 
 .cake-tier {
   margin: 0 auto;
-  border-radius: 8px;
+  border-radius: 18px;
+  background: radial-gradient(circle at 50% 20%, #ffe4f0 0%, var(--pink) 55%, var(--pink-deep) 100%);
+  box-shadow: inset 0 6px 18px rgba(255,255,255,0.6), 0 14px 36px rgba(0,0,0,0.18);
+  position: relative;
+}
+
+.cake-tier::before {
+  content: '';
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 12px;
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #fff 0%, #ffe4ee 50%, #fff 100%);
+  box-shadow: 0 0 18px rgba(255,255,255,0.5);
 }
 
 .tier1 {
-  width: 120px;
-  height: 40px;
-  background: linear-gradient(var(--pink), var(--pink-deep));
-  border: 2px solid var(--rcb-gold);
+  width: 140px;
+  height: 45px;
 }
 
 .tier2 {
-  width: 90px;
-  height: 35px;
-  background: linear-gradient(var(--white), var(--pink-light));
-  border: 2px solid var(--rcb-red);
+  width: 100px;
+  height: 38px;
   margin-bottom: -2px;
 }
 
 .tier3 {
-  width: 60px;
+  width: 70px;
   height: 30px;
-  background: var(--rcb-red);
-  border: 2px solid var(--rcb-gold);
   margin-bottom: -2px;
+}
+
+.birthday-cake::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: inset 0 20px 20px rgba(255,255,255,0.2);
 }
 
 .candles {
@@ -894,10 +1018,35 @@ body {
   font-family: var(--font-display);
   font-size: 1.5rem;
   color: var(--rcb-red);
+  text-shadow: 0 2px 8px rgba(236,28,36,0.2);
+}
+
+@keyframes cakeGlow {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+.celebration-words {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 18px;
+  text-transform: uppercase;
+}
+
+.celebration-words span {
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.95);
+  border: 1px solid #ffd6e8;
+  color: var(--rcb-red);
+  font-weight: 700;
+  font-size: 0.8rem;
+  box-shadow: 0 10px 24px rgba(255,105,180,0.14);
 }
 
 .final-message {
-  text-align: center;
   background: var(--white);
   border-radius: var(--radius);
   padding: 24px;
@@ -996,6 +1145,12 @@ body {
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes backgroundDance {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 /* ===== Mobile tweaks ===== */
