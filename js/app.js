@@ -72,6 +72,34 @@
   // ===== Music =====
   const bgMusic = document.getElementById('bgMusic');
 
+  // Visible play/pause control (fallback when autoplay is blocked)
+  const musicBtn = document.getElementById('musicBtn');
+  function updateMusicBtn() {
+    if (!musicBtn) return;
+    const text = (bgMusic && !bgMusic.paused) ? 'Pause' : 'Play';
+    musicBtn.classList.toggle('playing', bgMusic && !bgMusic.paused);
+    const label = musicBtn.querySelector('.music-text');
+    if (label) label.textContent = text;
+    musicBtn.setAttribute('aria-pressed', (bgMusic && !bgMusic.paused) ? 'true' : 'false');
+  }
+  if (musicBtn) {
+    musicBtn.addEventListener('click', () => {
+      if (!bgMusic) return;
+      if (bgMusic.paused) {
+        bgMusic.play().catch(() => {});
+      } else {
+        bgMusic.pause();
+      }
+      updateMusicBtn();
+    });
+  }
+  if (bgMusic) {
+    bgMusic.addEventListener('play', updateMusicBtn);
+    bgMusic.addEventListener('pause', updateMusicBtn);
+    // initial sync
+    updateMusicBtn();
+  }
+
   // Attempt to play on load (some browsers require user interaction and may block autoplay).
   window.addEventListener('load', () => {
     if (bgMusic) {
